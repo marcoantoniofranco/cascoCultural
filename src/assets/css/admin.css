@@ -1,0 +1,151 @@
+body {
+  background-color: var(--light-bg);
+  padding-bottom: 4rem;
+}
+
+.admin-container {
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin: 2rem 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.4rem;
+  color: var(--secondary-color);
+  margin: 3rem 0 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.user-info a {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 0.4rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.user-info a:hover {
+  background-color: var(--secondary-color);
+}
+
+.message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0.4rem;
+  font-weight: 600;
+}
+
+form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 3rem;
+}
+
+form p {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.4rem;
+  font-size: 1.6rem;
+  font-family: inherit;
+}
+
+input[type="file"] {
+  padding: 1rem 0;
+}
+
+button[type="submit"] {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 1.2rem 2.4rem;
+  border-radius: 0.4rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #2d9348;
+}
+
+.obra-cadastrada {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.obra-cadastrada h3 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.obra-cadastrada p {
+  margin-bottom: 1rem;
+}
+
+.obra-cadastrada img {
+  max-height: 30rem;
+  width: auto;
+  margin: 1.5rem 0;
+  border-radius: 0.4rem;
+}
+
+.obra-cadastrada button[name="excluir"] {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.obra-cadastrada button[name="excluir"]:hover {
+  background-color: #bd2130;
+}
+
+@media (max-width: 768px) {
+  form {
+    padding: 1.5rem;
+  }
+} 

@@ -52,53 +52,66 @@ $obrasDonatello = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <title>Galeria de Obras</title>
 </head>
 
 <body>
   <header>
-    <nav>
-      <ul>
-        <li><a href="./login.php">Admin</a></li>
-      </ul>
-    </nav>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="./login.php">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <div class="obras-container">
-    <div class="img_container">
-      <a href="detalhe.php?id=4">
-        <img src="<?=$obrasRafael['imagem']?>" alt="<?=$obrasRafael['obra']?>">
-      </a>
-    </div>
-    <div class="img_container">
-      <a href="detalhe.php?id=2">
-        <img src="<?=$obrasMichelangelo['imagem']?>" alt="<?=$obrasMichelangelo['obra']?>">
-      </a>
-    </div>
-    <div class="img_container">
-      <a href="detalhe.php?id=3">
-        <img src="<?=$obrasLeonardo['imagem']?>" alt="<?=$obrasLeonardo['obra']?>">
-      </a>
-    </div>
-    <div class="img_container">
-      <a href="detalhe.php?id=1">
-        <img src="<?=$obrasDonatello['imagem']?>" alt="<?=$obrasDonatello['obra']?>">
-      </a>
-    </div>
 
-    <?php if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])): ?>
-    <?php foreach ($_SESSION["obras"] as $obra): ?>
-    <?php if (!empty($obra["imagem"])): ?>
-    <div class="img_container">
-      <a href="detalhe.php?id=<?= $obra["id"] ?? count($_SESSION["obras"]) + 10 ?>">
-        <img src="<?= htmlspecialchars($obra["imagem"]) ?>" alt="<?= htmlspecialchars($obra["titulo"]) ?>">
-      </a>
+  <main>
+    <h1 class="page-title">Galeria de Obras</h1>
+
+    <div class="obras-container">
+      <div class="img_container">
+        <a href="detalhe.php?id=4">
+          <img src="<?=$obrasRafael['imagem']?>" alt="<?=$obrasRafael['obra']?>">
+        </a>
+      </div>
+      <div class="img_container">
+        <a href="detalhe.php?id=2">
+          <img src="<?=$obrasMichelangelo['imagem']?>" alt="<?=$obrasMichelangelo['obra']?>">
+        </a>
+      </div>
+      <div class="img_container">
+        <a href="detalhe.php?id=3">
+          <img src="<?=$obrasLeonardo['imagem']?>" alt="<?=$obrasLeonardo['obra']?>">
+        </a>
+      </div>
+      <div class="img_container">
+        <a href="detalhe.php?id=1">
+          <img src="<?=$obrasDonatello['imagem']?>" alt="<?=$obrasDonatello['obra']?>">
+        </a>
+      </div>
+
+      <?php if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])): ?>
+      <?php foreach ($_SESSION["obras"] as $obra): ?>
+      <?php if (!empty($obra["imagem"])): ?>
+      <div class="img_container">
+        <a href="detalhe.php?id=<?= $obra["id"] ?? count($_SESSION["obras"]) + 10 ?>">
+          <img src="<?= htmlspecialchars($obra["imagem"]) ?>" alt="<?= htmlspecialchars($obra["titulo"]) ?>">
+        </a>
+      </div>
+      <?php endif; ?>
+      <?php endforeach; ?>
+      <?php endif; ?>
     </div>
-    <?php endif; ?>
-    <?php endforeach; ?>
-    <?php endif; ?>
-  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <?= date('Y') ?> Galeria de Arte. Todos os direitos reservados.</p>
+    </div>
+  </footer>
 </body>
 
 </html>

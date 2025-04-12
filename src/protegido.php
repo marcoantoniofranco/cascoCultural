@@ -65,96 +65,112 @@ if (isset($_SESSION["mensagem"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Área Administrativa</title>
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/admin.css">
 </head>
 
 <body>
-  <h1>Painel Administrativo</h1>
+  <header>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="index.php">Voltar para o catálogo</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <p>Você está logado como <strong><?php echo $_SESSION["usuario"]; ?></strong>.</p>
-  <p><a href="logout.php">Sair</a></p>
+  <div class="admin-container">
+    <h1>Painel Administrativo</h1>
 
-  <?php if ($mensagem): ?>
-  <p><?= htmlspecialchars($mensagem) ?></p>
-  <?php endif; ?>
+    <div class="user-info">
+      <p>Você está logado como <strong><?php echo $_SESSION["usuario"]; ?></strong>.</p>
+      <p><a href="logout.php">Sair</a></p>
+    </div>
 
-  <hr>
-
-  <h2>Cadastrar nova obra</h2>
-  <form method="POST" enctype="multipart/form-data">
-    <p>
-      <label for="titulo">Título:</label>
-      <input type="text" name="titulo" id="titulo" required>
-    </p>
-
-    <p>
-      <label for="data">Ano:</label>
-      <input type="text" name="data" id="data" required>
-    </p>
-
-    <p>
-      <label for="artista">Artista:</label>
-      <select name="artista" id="artista" required>
-        <option value="">Selecione o Artista</option>
-        <option value="Donatello">Donatello</option>
-        <option value="Leonardo">Leonardo</option>
-        <option value="Rafael">Rafael</option>
-        <option value="Michelangelo">Michelangelo</option>
-      </select>
-    </p>
-
-    <p>
-      <label for="categoria">Categoria:</label>
-      <select name="categoria" id="categoria" required>
-        <option value="">Selecione a categoria</option>
-        <option value="Retrato">Retrato</option>
-        <option value="Escultura">Escultura</option>
-        <option value="Cerâmica">Cerâmica</option>
-        <option value="Gravura">Gravura</option>
-      </select>
-    </p>
-
-    <p>
-      <label for="descricao">Descrição:</label>
-      <textarea name="descricao" id="descricao" rows="4" cols="50" required></textarea>
-    </p>
-
-    <p>
-      <label for="imagem">Imagem da obra (opcional):</label>
-      <input type="file" name="imagem" id="imagem" accept="image/*">
-    </p>
-
-    <p>
-      <button type="submit">Salvar</button>
-    </p>
-  </form>
-
-  <p>
-    <a href="index.php">Voltar para o catálogo</a>
-  </p>
-
-  <?php if (!empty($_SESSION["obras"])): ?>
-  <hr>
-  <h2>Obras Cadastradas</h2>
-
-  <?php foreach ($_SESSION["obras"] as $indice => $obra): ?>
-  <div>
-    <h3><?= htmlspecialchars($obra["titulo"]) ?></h3>
-    <p><strong>Artista:</strong> <?= htmlspecialchars($obra["artista"]) ?></p>
-    <p><strong>Categoria:</strong> <?= htmlspecialchars($obra["categoria"]) ?></p>
-    <p><strong>Ano:</strong> <?= htmlspecialchars($obra["data"]) ?></p>
-    <p><strong>Descrição:</strong> <?= htmlspecialchars($obra["descricao"]) ?></p>
-
-    <?php if (!empty($obra["imagem"])): ?>
-    <p><img src="<?= htmlspecialchars($obra["imagem"]) ?>" alt="Imagem da obra"></p>
+    <?php if ($mensagem): ?>
+    <div class="message"><?= htmlspecialchars($mensagem) ?></div>
     <?php endif; ?>
 
-    <form method="POST">
-      <input type="hidden" name="indice" value="<?= $indice ?>">
-      <button type="submit" name="excluir">Excluir</button>
+    <h2>Cadastrar nova obra</h2>
+    <form method="POST" enctype="multipart/form-data">
+      <p>
+        <label for="titulo">Título:</label>
+        <input type="text" name="titulo" id="titulo" required>
+      </p>
+
+      <p>
+        <label for="data">Ano:</label>
+        <input type="text" name="data" id="data" required>
+      </p>
+
+      <p>
+        <label for="artista">Artista:</label>
+        <select name="artista" id="artista" required>
+          <option value="">Selecione o Artista</option>
+          <option value="Donatello">Donatello</option>
+          <option value="Leonardo">Leonardo</option>
+          <option value="Rafael">Rafael</option>
+          <option value="Michelangelo">Michelangelo</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="categoria">Categoria:</label>
+        <select name="categoria" id="categoria" required>
+          <option value="">Selecione a categoria</option>
+          <option value="Retrato">Retrato</option>
+          <option value="Escultura">Escultura</option>
+          <option value="Cerâmica">Cerâmica</option>
+          <option value="Gravura">Gravura</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="descricao">Descrição:</label>
+        <textarea name="descricao" id="descricao" rows="4" cols="50" required></textarea>
+      </p>
+
+      <p>
+        <label for="imagem">Imagem da obra (opcional):</label>
+        <input type="file" name="imagem" id="imagem" accept="image/*">
+      </p>
+
+      <p>
+        <button type="submit">Salvar</button>
+      </p>
     </form>
+
+    <?php if (!empty($_SESSION["obras"])): ?>
+    <h2>Obras Cadastradas</h2>
+
+    <?php foreach ($_SESSION["obras"] as $indice => $obra): ?>
+    <div class="obra-cadastrada">
+      <h3><?= htmlspecialchars($obra["titulo"]) ?></h3>
+      <p><strong>Artista:</strong> <?= htmlspecialchars($obra["artista"]) ?></p>
+      <p><strong>Categoria:</strong> <?= htmlspecialchars($obra["categoria"]) ?></p>
+      <p><strong>Ano:</strong> <?= htmlspecialchars($obra["data"]) ?></p>
+      <p><strong>Descrição:</strong> <?= htmlspecialchars($obra["descricao"]) ?></p>
+
+      <?php if (!empty($obra["imagem"])): ?>
+      <p><img src="<?= htmlspecialchars($obra["imagem"]) ?>" alt="Imagem da obra"></p>
+      <?php endif; ?>
+
+      <form method="POST">
+        <input type="hidden" name="indice" value="<?= $indice ?>">
+        <button type="submit" name="excluir">Excluir</button>
+      </form>
+    </div>
+    <?php endforeach; ?>
+    <?php endif; ?>
   </div>
-  <?php endforeach; ?>
-  <?php endif; ?>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <?= date('Y') ?> Galeria de Arte. Todos os direitos reservados.</p>
+    </div>
+  </footer>
 </body>
 
 </html>

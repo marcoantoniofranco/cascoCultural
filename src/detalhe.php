@@ -71,27 +71,32 @@ if (isset($_SESSION["obras"]) && is_array($_SESSION["obras"])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= $obra_selecionada['titulo'] ?> | Galeria de Arte</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/detalhe.css">
 </head>
+
 <body>
   <header>
-    <nav>
-      <ul>
-        <li><a href="index.php">Início</a></li>
-        <li><a href="login.php">Admin</a></li>
-      </ul>
-    </nav>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="index.php">Início</a></li>
+          <li><a href="login.php">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
     <div class="navegacao">
-      <a href="index.php">Início</a> > 
-      <span><?= $obra_selecionada['categoria_nome'] ?></span> > 
+      <a href="index.php">Início</a> >
+      <span><?= $obra_selecionada['categoria_nome'] ?></span> >
       <span><?= $obra_selecionada['titulo'] ?></span>
     </div>
 
@@ -108,7 +113,7 @@ if (isset($_SESSION["obras"]) && is_array($_SESSION["obras"])) {
         <p><strong>Categoria:</strong> <?= $obra_selecionada['categoria_nome'] ?></p>
         <p><strong>Descrição:</strong></p>
         <p><?= $obra_selecionada['descricao'] ?></p>
-        
+
         <a href="index.php">Voltar para galeria</a>
       </div>
     </div>
@@ -135,7 +140,10 @@ if (isset($_SESSION["obras"]) && is_array($_SESSION["obras"])) {
   </main>
 
   <footer>
-    <p>&copy; <?= date('Y') ?> Galeria de Arte. Todos os direitos reservados.</p>
+    <div class="container">
+      <p>&copy; <?= date('Y') ?> Galeria de Arte. Todos os direitos reservados.</p>
+    </div>
   </footer>
 </body>
-</html> 
+
+</html>
