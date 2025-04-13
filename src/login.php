@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 
 if (isset($_POST['modo'])) {
@@ -11,22 +12,24 @@ if (isset($_POST['modo'])) {
 $modo = isset($_COOKIE['modo']) ? $_COOKIE['modo'] : 'claro';
 $classe_modo = $modo == 'escuro' ? 'dark' : '';
 
-$erro = '';
+$erro = "";
+$usuario = 'admin';
+$senha = password_hash('123', PASSWORD_DEFAULT);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['modo'])) {
-    $username = $_POST["username"] ?? '';
-    $password = $_POST["password"] ?? '';
-    
-    if ($username === "admin" && $password === "admin123") {
-        $_SESSION["logado"] = true;
-        $_SESSION["usuario"] = $username;
-        header("Location: protegido.php");
-        exit;
-    } else {
-        $erro = "Credenciais inválidas. Tente novamente.";
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['modo'])) {
+  $login = $_POST['usuario'] ?? '';
+  $senha_digitada = $_POST['senha'] ?? '';
+
+  if ($login === $usuario && password_verify($senha_digitada, $senha)) {
+    $_SESSION['logado'] = true;
+    header('Location: protegido.php');
+    exit;
+  } else {
+    $erro = "Usuário ou senha inválidos.";
+  }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br" class="<?= $classe_modo ?>">
@@ -78,12 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['modo'])) {
         <div class="login-texture"></div>
 
         <div class="login-header">
-          <div class="logo">
-            <div class="logo-icon">
-              <span>C</span>
-            </div>
-            <span class="logo-text">Casco<span>Cultural</span></span>
-          </div>
           <h1>Área Administrativa</h1>
           <p>Entre com suas credenciais para acessar o painel</p>
         </div>
@@ -98,33 +95,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['modo'])) {
 
           <form method="post" class="login-form">
             <div class="form-group">
-              <label for="username">Usuário</label>
+              <label for="usuario">Usuário</label>
               <div class="input-with-icon">
                 <img src="./assets/img/icons/user.svg" class="input-icon" alt="Usuário">
-                <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
+                <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="password">Senha</label>
+              <label for="senha">Senha</label>
               <div class="input-with-icon">
                 <img src="./assets/img/icons/lock.svg" class="input-icon" alt="Senha">
-                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
               </div>
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="login-btn">
+              <button type="submit" class="login-btn flex items-center justify-center w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 <span>Entrar</span>
-                <img src="./assets/img/icons/log-in.svg" class="btn-icon" alt="Entrar">
+                <img src="./assets/img/icons/log-in.svg" class="ml-2 h-5 w-5" alt="Entrar">
               </button>
             </div>
-          </form>
 
-          <div class="login-help">
-            <p>Credenciais para teste: <br><strong>Usuário:</strong> admin <br><strong>Senha:</strong> admin123</p>
-          </div>
-        </div>
 
         <div class="login-footer">
           <a href="index.php" class="back-link">
