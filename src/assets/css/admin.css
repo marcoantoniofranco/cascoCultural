@@ -79,14 +79,41 @@ header {
   justify-content: center;
   color: white;
   font-weight: bold;
+  transform: rotate(45deg);
+  transition: transform 0.3s;
+}
+
+.logo-icon:hover {
+  transform: rotate(0);
+}
+
+.logo-icon span {
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+  transform: rotate(-45deg);
+  transition: transform 0.3s;
+}
+
+.logo-icon:hover span {
+  transform: rotate(0);
 }
 
 .logo-text {
-  font-size: 1.25rem;
+  font-size: 2.2rem;
   font-weight: 700;
+  color: var(--dark);
+}
+
+.dark .logo-text {
+  color: var(--light);
 }
 
 .logo-text span {
+  color: var(--primary);
+}
+
+.dark .logo-text span {
   color: var(--primary);
 }
 
@@ -499,6 +526,257 @@ footer {
   color: white;
   transform: translateY(-3px);
 }
+.form-obra {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .form-obra {
+  background-color: #1E293B;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-obra::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+.form-obra .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-obra label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.dark .form-obra label {
+  color: var(--light);
+}
+
+.form-obra input[type="text"],
+.form-obra input[type="file"],
+.form-obra select,
+.form-obra textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-light);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background-color: white;
+  color: var(--dark);
+}
+
+.dark .form-obra input[type="text"],
+.dark .form-obra input[type="file"],
+.dark .form-obra select,
+.dark .form-obra textarea {
+  border-color: #374151;
+  background-color: #111827;
+  color: var(--light);
+}
+
+.form-obra input[type="text"]:focus,
+.form-obra select:focus,
+.form-obra textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  outline: none;
+}
+
+.dark .form-obra input[type="text"]:focus,
+.dark .form-obra select:focus,
+.dark .form-obra textarea:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.form-obra textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn-salvar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, var(--primary), #4338CA);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(79, 70, 229, 0.25);
+}
+
+.btn-salvar:hover {
+  background: linear-gradient(to right, #4338CA, #3730A3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(79, 70, 229, 0.3);
+}
+
+.btn-salvar:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+/* Melhorias na lista de obras */
+.lista-obras {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .lista-obras {
+  background-color: #1E293B;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.lista-obras::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, var(--secondary), var(--primary));
+}
+
+.lista-obras h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dark .lista-obras h2 {
+  color: var(--light);
+}
+
+.lista-obras h2::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.5rem;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+.lista-obras table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lista-obras th {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 2px solid var(--primary-light);
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.dark .lista-obras th {
+  border-bottom-color: var(--primary);
+  color: var(--light);
+}
+
+.lista-obras td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-light);
+  color: var(--dark-light);
+}
+
+.dark .lista-obras td {
+  border-bottom-color: #2D3748;
+  color: #E2E8F0;
+}
+
+.lista-obras tr:last-child td {
+  border-bottom: none;
+}
+
+.lista-obras tr:hover td {
+  background-color: #F8FAFC;
+}
+
+.dark .lista-obras tr:hover td {
+  background-color: #1A202C;
+}
+
+.btn-excluir {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-excluir:hover {
+  background-color: #B91C1C;
+}
+
+/* Mensagem de sucesso */
+.mensagem-sucesso {
+  background-color: #ECFDF5;
+  border-left: 4px solid var(--success);
+  color: #065F46;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.dark .mensagem-sucesso {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #A7F3D0;
+}
+
+.mensagem-sucesso::before {
+  content: '✓';
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -516,4 +794,80 @@ footer {
     width: 100%;
     justify-content: space-between;
   }
+  
+  .form-obra, .lista-obras {
+    padding: 1.5rem;
+  }
+  
+  .lista-obras table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .admin-header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-obra, .lista-obras {
+    padding: 1rem;
+  }
+  
+  .btn-salvar {
+    width: 100%;
+  }
+}
+
+/* Efeito shimmer para o formulário */
+.form-obra .shimmer-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: shimmer 3s infinite;
+  transform: skewX(-25deg);
+  opacity: 0.3;
+}
+
+.dark .form-obra .shimmer-effect {
+  background: linear-gradient(
+    to right,
+    rgba(30, 41, 59, 0) 0%,
+    rgba(30, 41, 59, 0.3) 50%,
+    rgba(30, 41, 59, 0) 100%
+  );
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-25deg);
+  }
+  100% {
+    transform: translateX(150%) skewX(-25deg);
+  }
+}
+
+/* Estilo para a mensagem de nenhuma obra */
+.sem-obras {
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--gray);
+  font-style: italic;
+  background-color: rgba(0,0,0,0.02);
+  border-radius: 6px;
+}
+
+.dark .sem-obras {
+  color: var(--gray-light);
+  background-color: rgba(255,255,255,0.05);
 }

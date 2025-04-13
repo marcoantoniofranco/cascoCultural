@@ -125,6 +125,7 @@ if (isset($_SESSION["mensagem"])) {
       </div>
 
       <form method="POST" enctype="multipart/form-data" class="form-obra">
+        <div class="shimmer-effect shimmer-gradient"></div>
         <div class="form-group">
           <label for="titulo">Título da Obra:</label>
           <input type="text" id="titulo" name="titulo" required>
@@ -193,7 +194,7 @@ if (isset($_SESSION["mensagem"])) {
           </tbody>
         </table>
         <?php else: ?>
-        <p>Nenhuma obra cadastrada.</p>
+        <p class="sem-obras">Nenhuma obra cadastrada.</p>
         <?php endif; ?>
       </div>
     </div>
