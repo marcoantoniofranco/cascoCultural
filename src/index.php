@@ -73,6 +73,34 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
     }
   }
 }
+
+// Processamento de filtros e busca
+$filtro_categoria = isset($_GET['categoria']) ? strtolower($_GET['categoria']) : '';
+$termo_busca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
+
+// Filtragem das obras
+$obras_filtradas = $_SESSION['$obras'];
+
+// Aplicar filtro de categoria
+if (!empty($filtro_categoria) && $filtro_categoria !== 'todas') {
+  $obras_filtradas = array_filter($obras_filtradas, function($obra) use ($filtro_categoria) {
+    return strtolower($obra['categoria']) === $filtro_categoria;
+  });
+}
+
+// Aplicar termo de busca
+if (!empty($termo_busca)) {
+  $obras_filtradas = array_filter($obras_filtradas, function($obra) use ($termo_busca) {
+    $termo_busca_lower = strtolower($termo_busca);
+    $titulo_lower = strtolower($obra['titulo']);
+    $artista_lower = strtolower($obra['artista']);
+    $descricao_lower = strtolower($obra['descricao']);
+    
+    return strpos($titulo_lower, $termo_busca_lower) !== false || 
+           strpos($artista_lower, $termo_busca_lower) !== false ||
+           strpos($descricao_lower, $termo_busca_lower) !== false;
+  });
+}
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +119,7 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
   <header>
     <div class="container">
       <div class="header-inner">
-        <a href="#" class="logo">
+        <a href="index.php" class="logo">
           <div class="logo-icon">
             <span>C</span>
           </div>
@@ -100,7 +128,7 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
 
         <nav>
           <ul>
-            <li><a href="#">Início</a></li>
+            <li><a href="index.php">Início</a></li>
             <li><a href="./login.php">Admin</a></li>
           </ul>
         </nav>
@@ -114,10 +142,12 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
             <?php endif; ?>
           </form>
 
-          <div class="search-container">
-            <input type="text" placeholder="Buscar obras..." class="search-input">
-            <img src="./assets/img/icons/search.svg" class="search-icon" alt="Buscar">
-          </div>
+          <form method="GET" action="index.php" class="search-container">
+            <input type="text" name="busca" placeholder="Buscar obras..." class="search-input" value="<?= htmlspecialchars($termo_busca) ?>">
+            <button type="submit" class="search-btn">
+              <img src="./assets/img/icons/search.svg" class="search-icon" alt="Buscar">
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -129,18 +159,37 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
       <p class="page-description">
         Explore uma coleção curada das obras-primas mais influentes da história da arte.
       </p>
+
+      <?php if (!empty($termo_busca)): ?>
+      <div class="busca-info">
+        <p>Resultados para: <strong><?= htmlspecialchars($termo_busca) ?></strong>
+          <a href="index.php" class="limpar-busca">(Limpar busca)</a>
+        </p>
+      </div>
+      <?php endif; ?>
     </div>
 
     <div class="filter-container">
-      <button class="filter-btn active">Todas</button>
-      <button class="filter-btn">Leonardo</button>
-      <button class="filter-btn">Michelangelo</button>
-      <button class="filter-btn">Donatello</button>
-      <button class="filter-btn">Rafael</button>
+      <a href="index.php?categoria=todas<?= !empty($termo_busca) ? '&busca='.urlencode($termo_busca) : '' ?>" class="filter-btn <?= empty($filtro_categoria) || $filtro_categoria === 'todas' ? 'active' : '' ?>">
+        Todas
+      </a>
+      <a href="index.php?categoria=leonardo<?= !empty($termo_busca) ? '&busca='.urlencode($termo_busca) : '' ?>" class="filter-btn <?= $filtro_categoria === 'leonardo' ? 'active' : '' ?>">
+        Leonardo
+      </a>
+      <a href="index.php?categoria=michelangelo<?= !empty($termo_busca) ? '&busca='.urlencode($termo_busca) : '' ?>" class="filter-btn <?= $filtro_categoria === 'michelangelo' ? 'active' : '' ?>">
+        Michelangelo
+      </a>
+      <a href="index.php?categoria=donatello<?= !empty($termo_busca) ? '&busca='.urlencode($termo_busca) : '' ?>" class="filter-btn <?= $filtro_categoria === 'donatello' ? 'active' : '' ?>">
+        Donatello
+      </a>
+      <a href="index.php?categoria=rafael<?= !empty($termo_busca) ? '&busca='.urlencode($termo_busca) : '' ?>" class="filter-btn <?= $filtro_categoria === 'rafael' ? 'active' : '' ?>">
+        Rafael
+      </a>
     </div>
 
     <div class="obras-grid">
-      <?php foreach ($_SESSION['$obras'] as $obra): ?>
+      <?php if (count($obras_filtradas) > 0): ?>
+      <?php foreach ($obras_filtradas as $obra): ?>
       <a href="detalhe.php?id=<?= $obra['id'] ?>" class="obra-card">
         <div class="obra-texture"></div>
         <div class="shimmer-effect shimmer-gradient"></div>
@@ -173,6 +222,12 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
         </div>
       </a>
       <?php endforeach; ?>
+      <?php else: ?>
+      <div class="mensagem-nenhuma-obra">
+        <p>Nenhuma obra encontrada com os critérios selecionados.</p>
+        <a href="index.php" class="btn-voltar">Voltar para todas as obras</a>
+      </div>
+      <?php endif; ?>
     </div>
   </main>
 
@@ -194,7 +249,7 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
         <div>
           <h3 class="footer-heading">Navegação</h3>
           <ul class="footer-links">
-            <li><a href="#">Início</a></li>
+            <li><a href="index.php">Início</a></li>
             <li><a href="./login.php">Admin</a></li>
           </ul>
         </div>
