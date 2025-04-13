@@ -101,9 +101,13 @@ if (isset($_SESSION["mensagem"])) {
         <div class="actions">
           <form method="POST" style="display: inline-block;">
             <?php if ($modo == 'escuro'): ?>
-            <button type="submit" name="modo" value="claro">Modo Claro</button>
+            <button type="submit" name="modo" value="claro" class="theme-toggle">
+              <img src="./assets/img/icons/sun.svg" alt="Modo Claro">
+            </button>
             <?php else: ?>
-            <button type="submit" name="modo" value="escuro">Modo Escuro</button>
+            <button type="submit" name="modo" value="escuro" class="theme-toggle">
+              <img src="./assets/img/icons/moon.svg" alt="Modo Escuro">
+            </button>
             <?php endif; ?>
           </form>
 
