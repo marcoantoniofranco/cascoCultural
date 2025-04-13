@@ -1,6 +1,16 @@
 <?php
 session_start();
 
+if (isset($_POST['modo'])) {
+  $modo = $_POST['modo'] == 'escuro' ? 'escuro' : 'claro';
+  setcookie('modo', $modo, time() + (86400 * 30), "/");
+  header("Location: " . $_SERVER['PHP_SELF']);
+  exit;
+}
+
+$modo = isset($_COOKIE['modo']) ? $_COOKIE['modo'] : 'claro';
+$classe_modo = $modo == 'escuro' ? 'dark' : '';
+
 if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
   header('Location: login.php');
   exit;
@@ -15,7 +25,7 @@ if (isset($_POST["excluir"])) {
   }
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST["excluir"])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST["excluir"]) && !isset($_POST['modo'])) {
   $caminho_imagem = "";
   
   if(isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
@@ -59,116 +69,135 @@ if (isset($_SESSION["mensagem"])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="<?= $classe_modo ?>">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Área Administrativa</title>
+  <title>Área Administrativa | Casco Cultural</title>
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/admin.css">
 </head>
 
-<body>
+<body class="bg-mesh-light">
   <header>
     <div class="container">
-      <nav>
-        <ul>
-          <li><a href="index.php">Voltar para o catálogo</a></li>
-        </ul>
-      </nav>
+      <div class="header-inner">
+        <a href="index.php" class="logo">
+          <div class="logo-icon">
+            <span>C</span>
+          </div>
+          <span class="logo-text">Casco<span>Cultural</span></span>
+        </a>
+
+        <nav>
+          <ul>
+            <li><a href="index.php">Início</a></li>
+            <li><a href="./protegido.php" class="active">Admin</a></li>
+          </ul>
+        </nav>
+
+        <div class="actions">
+          <form method="POST" style="display: inline-block;">
+            <?php if ($modo == 'escuro'): ?>
+            <button type="submit" name="modo" value="claro">Modo Claro</button>
+            <?php else: ?>
+            <button type="submit" name="modo" value="escuro">Modo Escuro</button>
+            <?php endif; ?>
+          </form>
+
+          <a href="logout.php" class="logout-btn">
+            <span>Sair</span>
+          </a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="admin-container">
-    <h1>Painel Administrativo</h1>
+  <main>
+    <div class="container admin-container">
+      <div class="admin-header">
+        <h1>Adicionar Nova Obra</h1>
+        <?php if (!empty($mensagem)): ?>
+        <div class="mensagem-sucesso"><?= $mensagem ?></div>
+        <?php endif; ?>
+      </div>
 
-    <div class="user-info">
-      <p>Você está logado como <strong><?php echo $_SESSION["usuario"]; ?></strong>.</p>
-      <p><a href="logout.php">Sair</a></p>
-    </div>
+      <form method="POST" enctype="multipart/form-data" class="form-obra">
+        <div class="form-group">
+          <label for="titulo">Título da Obra:</label>
+          <input type="text" id="titulo" name="titulo" required>
+        </div>
 
-    <?php if ($mensagem): ?>
-    <div class="message"><?= htmlspecialchars($mensagem) ?></div>
-    <?php endif; ?>
+        <div class="form-group">
+          <label for="artista">Artista:</label>
+          <input type="text" id="artista" name="artista" required>
+        </div>
 
-    <h2>Cadastrar nova obra</h2>
-    <form method="POST" enctype="multipart/form-data">
-      <p>
-        <label for="titulo">Título:</label>
-        <input type="text" name="titulo" id="titulo" required>
-      </p>
+        <div class="form-group">
+          <label for="data">Data de Criação:</label>
+          <input type="text" id="data" name="data" required>
+        </div>
 
-      <p>
-        <label for="data">Ano:</label>
-        <input type="text" name="data" id="data" required>
-      </p>
+        <div class="form-group">
+          <label for="categoria">Categoria:</label>
+          <input type="text" id="categoria" name="categoria" required>
+        </div>
 
-      <p>
-        <label for="artista">Artista:</label>
-        <select name="artista" id="artista" required>
-          <option value="">Selecione o Artista</option>
-          <option value="Donatello">Donatello</option>
-          <option value="Leonardo">Leonardo</option>
-          <option value="Rafael">Rafael</option>
-          <option value="Michelangelo">Michelangelo</option>
-        </select>
-      </p>
+        <div class="form-group">
+          <label for="descricao">Descrição:</label>
+          <textarea id="descricao" name="descricao" rows="4" required></textarea>
+        </div>
 
-      <p>
-        <label for="categoria">Categoria:</label>
-        <select name="categoria" id="categoria" required>
-          <option value="">Selecione a categoria</option>
-          <option value="Retrato">Retrato</option>
-          <option value="Escultura">Escultura</option>
-          <option value="Cerâmica">Cerâmica</option>
-          <option value="Gravura">Gravura</option>
-        </select>
-      </p>
+        <div class="form-group">
+          <label for="imagem">Imagem da Obra:</label>
+          <input type="file" id="imagem" name="imagem" accept="image/*" required>
+        </div>
 
-      <p>
-        <label for="descricao">Descrição:</label>
-        <textarea name="descricao" id="descricao" rows="4" cols="50" required></textarea>
-      </p>
-
-      <p>
-        <label for="imagem">Imagem da obra (opcional):</label>
-        <input type="file" name="imagem" id="imagem" accept="image/*">
-      </p>
-
-      <p>
-        <button type="submit">Salvar</button>
-      </p>
-    </form>
-
-    <?php if (!empty($_SESSION["obras"])): ?>
-    <h2>Obras Cadastradas</h2>
-
-    <?php foreach ($_SESSION["obras"] as $indice => $obra): ?>
-    <div class="obra-cadastrada">
-      <h3><?= htmlspecialchars($obra["titulo"]) ?></h3>
-      <p><strong>Artista:</strong> <?= htmlspecialchars($obra["artista"]) ?></p>
-      <p><strong>Categoria:</strong> <?= htmlspecialchars($obra["categoria"]) ?></p>
-      <p><strong>Ano:</strong> <?= htmlspecialchars($obra["data"]) ?></p>
-      <p><strong>Descrição:</strong> <?= htmlspecialchars($obra["descricao"]) ?></p>
-
-      <?php if (!empty($obra["imagem"])): ?>
-      <p><img src="<?= htmlspecialchars($obra["imagem"]) ?>" alt="Imagem da obra"></p>
-      <?php endif; ?>
-
-      <form method="POST">
-        <input type="hidden" name="indice" value="<?= $indice ?>">
-        <button type="submit" name="excluir">Excluir</button>
+        <button type="submit" class="btn-salvar">Salvar Obra</button>
       </form>
+
+      <div class="lista-obras">
+        <h2>Obras Cadastradas</h2>
+        <?php if (isset($_SESSION["obras"]) && count($_SESSION["obras"]) > 0): ?>
+        <table>
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Artista</th>
+              <th>Categoria</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($_SESSION["obras"] as $indice => $obra): ?>
+            <tr>
+              <td><?= $obra["titulo"] ?></td>
+              <td><?= $obra["artista"] ?></td>
+              <td><?= $obra["categoria"] ?></td>
+              <td>
+                <form method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta obra?')">
+                  <input type="hidden" name="indice" value="<?= $indice ?>">
+                  <button type="submit" name="excluir" value="1" class="btn-excluir">Excluir</button>
+                </form>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <?php else: ?>
+        <p>Nenhuma obra cadastrada.</p>
+        <?php endif; ?>
+      </div>
     </div>
-    <?php endforeach; ?>
-    <?php endif; ?>
-  </div>
+  </main>
 
   <footer>
     <div class="container">
-      <p>&copy; <?= date('Y') ?> Galeria de Arte. Todos os direitos reservados.</p>
+      <div class="copyright">
+        <p>&copy; <?= date('Y') ?> Casco Cultural. Todos os direitos reservados.</p>
+      </div>
     </div>
   </footer>
 </body>

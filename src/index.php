@@ -1,115 +1,208 @@
 <?php
 session_start();
 
-$obrasRafael = [
-    'id' => 1,
-    'nome' => 'Rafael',
-    'ano' => 1505,
-    'obra' => 'A Escola de Atenas',
-    'local' => 'Vaticano',
-    'categoria' => 'Renascimento',
-    'descricao' => 'A Escola de Atenas é uma das obras mais famosas de Rafael, representando a filosofia e o conhecimento da Antiguidade Clássica.',
-    'imagem' => './assets/img/pictures/EscolaDeAtenas.jpg',
-];
+if (isset($_POST['modo'])) {
+  $modo = $_POST['modo'] == 'escuro' ? 'escuro' : 'claro';
+  setcookie('modo', $modo, time() + (86400 * 30), "/");
+  header("Location: " . $_SERVER['PHP_SELF']);
+  exit;
+}
 
-$obrasMichelangelo = [
-    'id' => 2,
-    'nome' => 'Michelangelo',
-    'ano' => 1512,
-    'obra' => 'A Criação de Adão',
-    'local' => 'Capela Sistina, Vaticano',
-    'categoria' => 'Renascimento',
-    'descricao' => 'A Criação de Adão é uma das obras mais icônicas de Michelangelo, retratando o momento em que Deus dá vida a Adão.',
-    'imagem' => './assets/img/pictures/CriacaoAdao.jpg',
-];
+$modo = isset($_COOKIE['modo']) ? $_COOKIE['modo'] : 'claro';
+$classe_modo = $modo == 'escuro' ? 'dark' : '';
 
-$obrasLeonardo = [
-    'id' => 3,
-    'nome' => 'Leonardo da Vinci',
-    'ano' => 1503,
-    'obra' => 'Mona Lisa',
-    'local' => 'Museu do Louvre, Paris',
-    'categoria' => 'Renascimento',
-    'descricao' => 'A Mona Lisa é uma das pinturas mais famosas do mundo, conhecida por seu sorriso enigmático e técnica inovadora.',
-    'imagem' => './assets/img/pictures/MonaLisa.jpg',
-];
+if (!isset($_SESSION['$obras'])) {
+  $_SESSION['$obras'] = [
+    [
+      'id' => 1,
+      'titulo' => 'Monalisa',
+      'categoria' => 'leonardo',
+      'categoria_nome' => 'Leonardo',
+      'artista' => 'Leonardo da Vinci',
+      'data' => '1503',
+      'descricao' => 'Também conhecida como Gioconda, é a mais notável e conhecida obra de Leonardo da Vinci.',
+      'imagem' => './assets/img/pictures/MonaLisa.jpg'
+    ],
+    [
+      'id' => 2,
+      'titulo' => 'Davi de Donatello',
+      'categoria' => 'donatello',
+      'categoria_nome' => 'Donatello',
+      'artista' => 'Donatello di Niccolò',
+      'data' => '1430',
+      'descricao' => 'Escultura de bronze que representa o herói bíblico Davi.',
+      'imagem' => './assets/img/pictures/donatello.jpg'
+    ],
+    [
+      'id' => 3,
+      'titulo' => 'A Criação de Adão',
+      'categoria' => 'michelangelo',
+      'categoria_nome' => 'Michelangelo',
+      'artista' => 'Michelangelo Buonarroti',
+      'data' => '1512',
+      'descricao' => 'Afresco pintado no teto da Capela Sistina, retratando a criação de Adão.',
+      'imagem' => './assets/img/pictures/CriacaoAdao.jpg'
+    ],
+    [
+      'id' => 4,
+      'titulo' => 'Escola de Atenas',
+      'categoria' => 'rafael',
+      'categoria_nome' => 'Rafael',
+      'artista' => 'Rafael Sanzio',
+      'data' => '1509',
+      'descricao' => 'Afresco que retrata uma reunião dos maiores filósofos e matemáticos da antiguidade.',
+      'imagem' => './assets/img/pictures/EscolaDeAtenas.jpg'
+    ]
+  ];
+}
 
-$obrasDonatello = [
-    'id' => 4,
-    'nome' => 'Donatello',
-    'ano' => 1430,
-    'obra' => 'David',
-    'local' => 'Museu Bargello, Florença',
-    'categoria' => 'Renascimento',
-    'descricao' => 'A escultura de David de Donatello é uma das primeiras representações do herói bíblico em forma humana, simbolizando a liberdade e a força.',
-    'imagem' => './assets/img/pictures/donatello.jpg',
-];
+if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
+  foreach ($_SESSION["obras"] as $obra) {
+    if (!empty($obra["imagem"])) {
+      $nova_obra = [
+        'id' => $obra["id"] ?? count($_SESSION['$obras']) + 10,
+        'titulo' => $obra["titulo"] ?? 'Sem título',
+        'categoria' => strtolower($obra["artista"] ?? 'outro'),
+        'categoria_nome' => $obra["artista"] ?? 'Outro',
+        'artista' => $obra["artista"] ?? 'Desconhecido',
+        'data' => $obra["data"] ?? 'N/A',
+        'descricao' => $obra["descricao"] ?? 'Sem descrição disponível.',
+        'imagem' => $obra["imagem"]
+      ];
+      $_SESSION['$obras'][] = $nova_obra;
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="<?= $classe_modo ?>">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casco Cultural | Galeria de Arte</title>
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link rel="stylesheet" href="./assets/css/style.css">
-  <title>Galeria de Obras</title>
+  <link rel="stylesheet" href="./assets/css/obra-card.css">
 </head>
 
-<body>
+<body class="bg-mesh-light">
   <header>
     <div class="container">
-      <nav>
-        <ul>
-          <li><a href="./login.php">Admin</a></li>
-        </ul>
-      </nav>
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <span>C</span>
+          </div>
+          <span class="logo-text">Casco<span>Cultural</span></span>
+        </a>
+
+        <nav>
+          <ul>
+            <li><a href="#">Início</a></li>
+            <li><a href="./login.php">Admin</a></li>
+          </ul>
+        </nav>
+
+        <div class="actions">
+          <form method="POST">
+            <?php if ($modo == 'escuro'): ?>
+            <button type="submit" name="modo" value="claro">Modo Claro</button>
+            <?php else: ?>
+            <button type="submit" name="modo" value="escuro">Modo Escuro</button>
+            <?php endif; ?>
+          </form>
+
+          <div class="search-container">
+            <input type="text" placeholder="Buscar obras..." class="search-input">
+            <img src="./assets/img/icons/search.svg" class="search-icon" alt="Buscar">
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
   <main>
-    <h1 class="page-title">Galeria de Obras</h1>
+    <div class="page-title">
+      <h1>Galeria de Arte</h1>
+      <p class="page-description">
+        Explore uma coleção curada das obras-primas mais influentes da história da arte.
+      </p>
+    </div>
 
-    <div class="obras-container">
-      <div class="img_container">
-        <a href="detalhe.php?id=4">
-          <img src="<?=$obrasRafael['imagem']?>" alt="<?=$obrasRafael['obra']?>">
-        </a>
-      </div>
-      <div class="img_container">
-        <a href="detalhe.php?id=2">
-          <img src="<?=$obrasMichelangelo['imagem']?>" alt="<?=$obrasMichelangelo['obra']?>">
-        </a>
-      </div>
-      <div class="img_container">
-        <a href="detalhe.php?id=3">
-          <img src="<?=$obrasLeonardo['imagem']?>" alt="<?=$obrasLeonardo['obra']?>">
-        </a>
-      </div>
-      <div class="img_container">
-        <a href="detalhe.php?id=1">
-          <img src="<?=$obrasDonatello['imagem']?>" alt="<?=$obrasDonatello['obra']?>">
-        </a>
-      </div>
+    <div class="filter-container">
+      <button class="filter-btn active">Todas</button>
+      <button class="filter-btn">Leonardo</button>
+      <button class="filter-btn">Michelangelo</button>
+      <button class="filter-btn">Donatello</button>
+      <button class="filter-btn">Rafael</button>
+    </div>
 
-      <?php if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])): ?>
-      <?php foreach ($_SESSION["obras"] as $obra): ?>
-      <?php if (!empty($obra["imagem"])): ?>
-      <div class="img_container">
-        <a href="detalhe.php?id=<?= $obra["id"] ?? count($_SESSION["obras"]) + 10 ?>">
-          <img src="<?= htmlspecialchars($obra["imagem"]) ?>" alt="<?= htmlspecialchars($obra["titulo"]) ?>">
-        </a>
-      </div>
-      <?php endif; ?>
+    <div class="obras-grid">
+      <?php foreach ($_SESSION['$obras'] as $obra): ?>
+      <a href="detalhe.php?id=<?= $obra['id'] ?>" class="obra-card">
+        <div class="obra-texture"></div>
+        <div class="shimmer-effect shimmer-gradient"></div>
+        <div class="obra-img-container">
+          <div class="img-overlay"></div>
+          <img src="<?= $obra['imagem'] ?>" alt="<?= $obra['titulo'] ?>">
+          <div class="obra-categoria">
+            <img src="./assets/img/icons/tag.svg" class="categoria-icon" alt="Categoria">
+            <?= $obra['categoria_nome'] ?>
+          </div>
+          <div class="obra-ano">
+            <img src="./assets/img/icons/calendar.svg" class="ano-icon" alt="Ano">
+            <?= $obra['data'] ?>
+          </div>
+        </div>
+        <div class="obra-info">
+          <div class="obra-divider"></div>
+          <h3 class="obra-titulo"><?= $obra['titulo'] ?></h3>
+          <p class="obra-artista"><?= $obra['artista'] ?></p>
+          <div class="obra-descricao-container">
+            <p class="obra-descricao line-clamp-3"><?= $obra['descricao'] ?></p>
+            <div class="descricao-fade"></div>
+          </div>
+          <div class="obra-btn-container">
+            <button class="obra-btn">
+              <span>Ver detalhes</span>
+              <img src="./assets/img/icons/arrow-right.svg" class="obra-btn-icon" width="16" height="16" alt="Ver detalhes">
+            </button>
+          </div>
+        </div>
+      </a>
       <?php endforeach; ?>
-      <?php endif; ?>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; <?= date('Y') ?> Galeria de Arte. Todos os direitos reservados.</p>
+      <div class="footer-grid">
+        <div>
+          <div class="logo">
+            <div class="logo-icon">
+              <span>C</span>
+            </div>
+            <span class="logo-text">Casco<span>Cultural</span></span>
+          </div>
+          <p class="footer-description">
+            Explore uma coleção curada das mais importantes obras de arte da história.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Navegação</h3>
+          <ul class="footer-links">
+            <li><a href="#">Início</a></li>
+            <li><a href="./login.php">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; <?= date('Y') ?> Casco Cultural. Todos os direitos reservados.</p>
+      </div>
     </div>
   </footer>
 </body>
