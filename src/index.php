@@ -102,7 +102,7 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
         <nav>
           <ul>
             <li><a href="index.php">Início</a></li>
-            <li><a href="./login.php">Admin</a></li>
+            <li><a href="<?= isset($_SESSION['logado']) && $_SESSION['logado'] === true ? './protegido.php' : './login.php' ?>">Admin</a></li>
           </ul>
         </nav>
 
@@ -223,7 +223,7 @@ if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
           <h3 class="footer-heading">Navegação</h3>
           <ul class="footer-links">
             <li><a href="index.php">Início</a></li>
-            <li><a href="./login.php">Admin</a></li>
+            <li><a href="<?= isset($_SESSION['logado']) && $_SESSION['logado'] === true ? './protegido.php' : './login.php' ?>">Admin</a></li>
           </ul>
         </div>
       </div>

@@ -123,7 +123,7 @@ foreach ($_SESSION['$obras'] as $obra) {
         <nav>
           <ul>
             <li><a href="index.php">Início</a></li>
-            <li><a href="./login.php">Admin</a></li>
+            <li><a href="<?= isset($_SESSION['logado']) && $_SESSION['logado'] === true ? './protegido.php' : './login.php' ?>">Admin</a></li>
           </ul>
         </nav>
 

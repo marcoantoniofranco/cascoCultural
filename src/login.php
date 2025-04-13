@@ -1,6 +1,10 @@
 <?php 
 
 session_start();
+if (isset($_SESSION['logado']) && $_SESSION['logado'] === true) {
+  header('Location: protegido.php');
+  exit;
+}
 
 if (isset($_POST['modo'])) {
   $modo = $_POST['modo'] == 'escuro' ? 'escuro' : 'claro';
@@ -118,14 +122,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['modo'])) {
             </div>
 
 
-        <div class="login-footer">
-          <a href="index.php" class="back-link">
-            <img src="./assets/img/icons/arrow-left.svg" class="back-icon" alt="Voltar">
-            <span>Voltar para o site</span>
-          </a>
+            <div class="login-footer">
+              <a href="index.php" class="back-link">
+                <img src="./assets/img/icons/arrow-left.svg" class="back-icon" alt="Voltar">
+                <span>Voltar para o site</span>
+              </a>
+            </div>
         </div>
       </div>
-    </div>
   </main>
 
   <footer>

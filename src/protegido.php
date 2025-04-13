@@ -133,12 +133,12 @@ if (isset($_SESSION["mensagem"])) {
         <div class="form-group">
           <label for="artista">Artista:</label>
           <select name="artista" class="w-full px-4 py-2 border rounded-md dark:bg-gray-800" required>
-          <option value="">Selecione o Artista</option>
-          <option value="Donatello">Donatello</option>
-          <option value="Leonardo">Leonardo</option>
-          <option value="Rafael">Rafael</option>
-          <option value="Michelangelo">Michelangelo</option>
-        </select>
+            <option value="">Selecione o Artista</option>
+            <option value="Donatello">Donatello</option>
+            <option value="Leonardo">Leonardo</option>
+            <option value="Rafael">Rafael</option>
+            <option value="Michelangelo">Michelangelo</option>
+          </select>
         </div>
 
         <div class="form-group">
