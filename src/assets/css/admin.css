@@ -39,7 +39,6 @@
   background-image: radial-gradient(#1F2937 1px, transparent 1px);
 }
 
-/* Header Styles */
 header {
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -60,7 +59,6 @@ header {
   padding: 1rem 0;
 }
 
-/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -117,7 +115,6 @@ header {
   color: var(--primary);
 }
 
-/* Navigation */
 nav ul {
   display: flex;
   gap: 1.5rem;
@@ -151,7 +148,6 @@ nav a.active::after {
   background-color: var(--primary);
 }
 
-/* Actions */
 .actions {
   display: flex;
   align-items: center;
@@ -193,7 +189,6 @@ nav a.active::after {
   background-color: #b91c1c;
 }
 
-/* Admin Container */
 .admin-container {
   padding: 2rem 0;
 }
@@ -215,7 +210,6 @@ nav a.active::after {
   font-size: 1.125rem;
 }
 
-/* Dashboard Cards */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -306,7 +300,6 @@ nav a.active::after {
   color: var(--primary-hover);
 }
 
-/* Stats Section */
 .stats-section {
   margin-top: 2rem;
 }
@@ -372,7 +365,6 @@ nav a.active::after {
   color: var(--gray);
 }
 
-/* Footer Styles */
 footer {
   background-color: #fff;
   border-top: 1px solid var(--gray-light);
@@ -634,7 +626,6 @@ footer {
   box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
 }
 
-/* Melhorias na lista de obras */
 .lista-obras {
   background-color: white;
   border-radius: 12px;
@@ -741,7 +732,6 @@ footer {
   background-color: #B91C1C;
 }
 
-/* Mensagem de sucesso */
 .mensagem-sucesso {
   background-color: #ECFDF5;
   border-left: 4px solid var(--success);
@@ -778,7 +768,6 @@ footer {
   }
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .header-inner {
     flex-direction: column;
@@ -819,7 +808,6 @@ footer {
   }
 }
 
-/* Efeito shimmer para o formulário */
 .form-obra .shimmer-effect {
   position: absolute;
   top: 0;
@@ -857,7 +845,6 @@ footer {
   }
 }
 
-/* Estilo para a mensagem de nenhuma obra */
 .sem-obras {
   text-align: center;
   padding: 2rem 0;

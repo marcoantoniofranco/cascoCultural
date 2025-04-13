@@ -1,6 +1,5 @@
 <?php
 
-// filtro e busca
 $filtro_categoria = isset($_GET['categoria']) ? strtolower($_GET['categoria']) : '';
 $termo_busca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
 

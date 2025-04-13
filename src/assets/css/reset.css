@@ -7,7 +7,6 @@
 :root {
   font-size: 62.5%;
   
-  /* Cores primárias */
   --leonardo-color: #0077b6;
   --leonardo-light: #90e0ef;
   --donatello-color: #9b5de5;
@@ -17,7 +16,6 @@
   --rafael-color: #d62828;
   --rafael-light: #f77f7f;
   
-  /* Cores de tema */
   --light-bg: #f9f9fb;
   --light-card: #ffffff;
   --light-accent: #f5f5f7;
@@ -25,24 +23,20 @@
   --dark-card: #1e1e24;
   --dark-accent: #2a2a35;
   
-  /* Cores de texto */
   --text-dark: #1a1a1a;
   --text-light: #ffffff;
   --text-muted-dark: #6b7280;
   --text-muted-light: #d1d5db;
   
-  /* Efeitos */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 6px 10px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   
-  /* Transições */
   --transition-fast: 0.3s ease;
   --transition-normal: 0.5s ease;
   --transition-slow: 0.7s ease;
   
-  /* Valores padrão */
   --border-radius-sm: 0.4rem;
   --border-radius: 0.8rem;
   --border-radius-lg: 1rem;

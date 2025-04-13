@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-/* Layout base */
 body {
   min-height: 100vh;
 }
@@ -25,7 +24,6 @@ body {
   background-attachment: fixed;
 }
 
-/* Header */
 header {
   position: fixed;
   top: 0;
@@ -107,7 +105,6 @@ header {
   color: var(--leonardo-light);
 }
 
-/* Navegação */
 nav ul {
   display: flex;
   gap: 3.2rem;
@@ -208,7 +205,6 @@ nav a:hover {
   opacity: 1;
 }
 
-/* Tema escuro */
 .dark .search-input {
   background-color: rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.1);
@@ -219,7 +215,6 @@ nav a:hover {
   filter: brightness(0.9);
 }
 
-/* Mensagem de busca */
 .busca-info {
   margin-top: 15px;
   padding: 10px 15px;
@@ -243,7 +238,6 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Filtros */
 .filter-container {
   display: flex;
   flex-wrap: wrap;
@@ -285,7 +279,6 @@ nav a:hover {
   background-color: rgba(var(--accent-color-rgb), 0.2);
 }
 
-/* Mensagem de nenhuma obra encontrada */
 .mensagem-nenhuma-obra {
   text-align: center;
   padding: 30px;
@@ -325,7 +318,6 @@ nav a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Conteúdo Principal */
 main {
   max-width: 128rem;
   margin: 0 auto;
@@ -374,7 +366,6 @@ main {
   color: var(--text-muted-light);
 }
 
-/* Grid de Obras */
 .obras-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
@@ -395,7 +386,6 @@ main {
   }
 }
 
-/* Footer */
 footer {
   background-color: var(--light-card);
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -516,7 +506,6 @@ footer {
   border-top-color: var(--dark-accent);
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .header-inner {
     height: 5.6rem;
