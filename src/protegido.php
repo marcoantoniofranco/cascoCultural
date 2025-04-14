@@ -43,8 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST["excluir"]) && !isset
     }
   }
   
+  $obra_id = time();
+  
   $nova_obra = [
-    "id" => time(),
+    "id" => $obra_id,
     "titulo" => $_POST["titulo"],
     "data" => $_POST["data"],
     "artista" => $_POST["artista"],
@@ -58,7 +60,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST["excluir"]) && !isset
   }
 
   $_SESSION["obras"][] = $nova_obra;
+  
+  if (!isset($_SESSION['$obras'])) {
+    $_SESSION['$obras'] = [];
+  }
+  
+  $_SESSION['$obras'][] = [
+    'id' => $obra_id,
+    'titulo' => $_POST["titulo"],
+    'categoria' => strtolower($_POST["artista"]),
+    'categoria_nome' => $_POST["artista"],
+    'artista' => $_POST["artista"],
+    'data' => $_POST["data"],
+    'descricao' => $_POST["descricao"],
+    'imagem' => $caminho_imagem
+  ];
+  
   $_SESSION["mensagem"] = "Obra salva com sucesso!";
+  
+  header("Location: " . $_SERVER['PHP_SELF']);
+  exit;
 }
 
 $mensagem = "";

@@ -58,19 +58,29 @@ if (!isset($_SESSION['$obras'])) {
 }
 
 if (isset($_SESSION["obras"]) && !empty($_SESSION["obras"])) {
+  $ids_existentes = array_map(function($obra) {
+    return $obra['id'];
+  }, $_SESSION['$obras']);
+  
   foreach ($_SESSION["obras"] as $obra) {
     if (!empty($obra["imagem"])) {
-      $nova_obra = [
-        'id' => $obra["id"] ?? count($_SESSION['$obras']) + 10,
-        'titulo' => $obra["titulo"] ?? 'Sem título',
-        'categoria' => strtolower($obra["artista"] ?? 'outro'),
-        'categoria_nome' => $obra["artista"] ?? 'Outro',
-        'artista' => $obra["artista"] ?? 'Desconhecido',
-        'data' => $obra["data"] ?? 'N/A',
-        'descricao' => $obra["descricao"] ?? 'Sem descrição disponível.',
-        'imagem' => $obra["imagem"]
-      ];
-      $_SESSION['$obras'][] = $nova_obra;
+      $obra_id = $obra["id"] ?? time() + rand(1000, 9999);
+      
+      // verifica se a obra já existe
+      if (!in_array($obra_id, $ids_existentes)) {
+        $nova_obra = [
+          'id' => $obra_id,
+          'titulo' => $obra["titulo"] ?? 'Sem título',
+          'categoria' => strtolower($obra["artista"] ?? 'outro'),
+          'categoria_nome' => $obra["artista"] ?? 'Outro',
+          'artista' => $obra["artista"] ?? 'Desconhecido',
+          'data' => $obra["data"] ?? 'N/A',
+          'descricao' => $obra["descricao"] ?? 'Sem descrição disponível.',
+          'imagem' => $obra["imagem"]
+        ];
+        $_SESSION['$obras'][] = $nova_obra;
+        $ids_existentes[] = $obra_id;
+      }
     }
   }
 }
